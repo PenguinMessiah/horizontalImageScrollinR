@@ -1,0 +1,77 @@
+---
+title: "galltest2"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(htmltools)
+library(glue)
+library(magick)
+library(knitr)
+library(shiny)
+
+```
+
+## lol
+
+```{r helpers}
+resolve_src <-function(path){
+  if (grepl("^https?://", path)){
+    return(path)
+  } else {
+    return(knitr::image_uri(path))
+  }
+}
+# MagicK is being used to force     every thumbnail to be the same crop/size
+process_thumb <- function(path, width = 300, height = 300){
+  img <- image_read(path)
+  img <- image_resize(img, glue("{width}x{height)^"))
+  img <- image_crop(img, glue("{width}x{height}"), gravuty = "center")
+  tmp <- tempfile(fileext = ".jpg")
+  image_write(img, tmp, format = "jpg")
+  knitr::image_uri(path)
+  
+}
+
+sponge_images <- c(
+  "https://www.bing.com/th/id/OSK.sDq8iv-3spbYQNzF0_8ZzoKGZclJeBFevdjAA18jDDk?w=155&h=200&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+  "https://www.bing.com/th/id/OSK.8dacd1bccf6f6fd38263dd096c1e22e6?w=155&h=200&c=8&rs=1&qlt=90&o=6&pid=3.1&rm=2",
+  "https://th.bing.com/th/id/OIP.Vy7j5hq7JYkvBWyCPDFC6gHaJO?w=310&h=198&c=7&rs=1&bgcl=fffffe&r=0&o=6&pid=AlgoBlockDebug",
+  "https://th.bing.com/th/id/OIP.Fr7uPJCLUc6m70E-xbGl_gAAAA?w=108&h=108&c=1&bgcl=0b1577&r=0&o=7&pid=ImgRC&rm=3"
+)
+
+```
+
+## Boyah
+
+```{r ccs, echo=FALSE, message=FALSE, warning=FALSE}
+tags$head(tag$style(HTML("
+  body { scroll-behavior: smooth; }
+  .hero-wrapper { position: relative; margin-bottom: 30px; }
+  .hero-strip {
+    display: flex; overflow-x: scroll; scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch; padding: 15px 0; scrollbar-width: none;
+  }
+  .hero-strip:: -webkit-scrollbar {display: none; }
+  .hero-strip img{
+  height: 260px; width: 220px; object-fit: cover;
+  scroll-snap-align: start; flex: 0 0 auto; margin-right: 14px;
+  border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2 ease;
+  }
+  .hero-strip img:hover {transfrom: scale(1.06); box-shadow: 0 6px 16px rgba(0, 0,0.35);}
+  .hero-arrow {
+  position: absolute; top: 50; transform: translateY(-50%);
+  background: rgba(0, 0, 0.55); color: white; border: none;
+  width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 20px; z-index: 10;
+  
+  }
+  .hero-arrow.left { left: 0px; } .hero-arrow.right { riht: 0px; }
+")))
+```
+```{r ui server}
+
+```
+
