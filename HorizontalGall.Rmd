@@ -1,0 +1,46 @@
+---
+title: "horizontalImplement"
+output: html_document
+runtime: shiny
+---
+
+## Hi this is a gallery test
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)     
+  library(htmltools)
+library(glue)
+library(Slick)
+library(magick)
+library(shiny)
+# Main gallery function
+my_gallery <- function(images, height = "670px" ){
+  # images are character vectors of URLs or local file path
+  img_tags <- lapply(images, function(src){
+    tags$img(src = src, style = glue(
+      "height:{height}; scroll-snap-align:start; flex:0 0 auto; margin-right:15px; border-radius:10px;"
+      )
+    )
+  })
+  
+  tags$div(
+    style = "display:flex; overflow-x:scroll; scroll-snap-rtpe:x mandatory; -webkit-overflow-scrolling:touch; padding:10px 0;",
+    img_tags
+  )
+}
+
+resolve_src <- function(path){
+  if(grepl("^https?://", path)){
+    return(path)  # This already a url
+  } else {
+    return(knitr::image_uri(path)) # Embeds local file as base64 so they can be used online
+  }
+  }
+```
+
+look at my sponges!
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+my_gallery(c("https://upload.wikimedia.org/wikipedia/commons/4/45/Spongilla_lacustris.jpg", "https://cdn.britannica.com/97/11697-004-9041962B/Freshwater-sponge.jpg", "https://carnegiemnh.org/wp-content/uploads/2018/09/tumblr_inline_pff8b2UCxV1tiol9c_540-1.jpg", "https://th.bing.com/th/id/OIP.VjFyxA_kifCpT1m_XgOzggAAAA?w=108&h=108&c=1&bgcl=81c9db&r=0&o=7&pid=ImgRC&rm=3                   "))
+```
+
