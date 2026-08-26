@@ -25,13 +25,13 @@ background: #f4f4f4;
 
 .gallery-card {
 flex: 0 0 auto;
-width: 280px;
-height: 200px;
+width: 560px;
+height: 400px;
 scroll-snap-align: start;
 position: relative;
 border-radius: 8px;
 overflow: hidden;
-box-shadow: 0 2px 6px rgba(0,0,0.15)
+box-shadow: 0 2px 6px rgba(0,0,0, 0.15)
 }
 
 .gallery-card img {
@@ -47,7 +47,7 @@ bottom: 0;
 left: 0;
 right: 0;
 padding: 8px 10px;
-background: linear-gradient(to top, rgba(0,0,0.7), rgba(0,0,0));
+background: linear-gradient(to top, rgba(0,0,0, 0.7), rgba(0,0,0,0));
 color: white;
 font-size: 0.9em;
 font-family: sans-serif;
@@ -62,7 +62,7 @@ gallery_data <- data.frame(
   stringsAsFactors = FALSE
 )
 
-gallery_cards <-pmap(gallery_data, functions(src, caption){
+gallery_cards <-pmap(gallery_data, function(src, caption){
   tags$div(
     class = "gallery-card",
     tags$img(src = src, alt = caption),
