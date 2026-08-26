@@ -20,7 +20,7 @@ scroll-snap-type: x mandatory;
 gap: 16px;
 padding: 16px;
 background: #f4f4f4;
--web-kit-overflow-scrolling: touch;
+-web kit-overflow-scrolling: touch;
 }
 
 .gallery-card {
@@ -57,8 +57,8 @@ yo
 
 ```{r build-gallery!}
 gallery_data <- data.frame(
-  src =paste0("https://cdn.hackaday.io/images/3386621752496019850.jpg", 1:8, "/600/450"),
-  caption =paste("Site", 1:8, "-Sample Sponge Photo"),
+  src = rep("https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg", 8),
+    caption = paste("Researcher", 1:8, "-Louisiana Freshwater Sponge Lab "),
   stringsAsFactors = FALSE
 )
 
