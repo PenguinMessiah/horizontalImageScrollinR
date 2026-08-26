@@ -1,0 +1,77 @@
+---
+title: "HOLIDAYinn"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(htmltools)
+library(purrr)
+library(knitr)
+``` 
+    
+busy bee
+
+```{css}
+.gallery-wrapper {
+display: flex;
+overflow-x: auto;
+scroll-snap-type: x mandatory;
+gap: 16px;
+padding: 16px;
+background: #f4f4f4;
+-web-kit-overflow-scrolling: touch;
+}
+
+.gallery-card {
+flex: 0 0 auto;
+width: 280px;
+height: 200px;
+scroll-snap-align: start;
+position: relative;
+border-radius: 8px;
+overflow: hidden;
+box-shadow: 0 2px 6px rgba(0,0,0.15)
+}
+
+.gallery-card img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+display: block;
+}
+
+.gallery-caption {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+padding: 8px 10px;
+background: linear-gradient(to top, rgba(0,0,0.7), rgba(0,0,0));
+color: white;
+font-size: 0.9em;
+font-family: sans-serif;
+}
+```
+yo
+
+```{r build-gallery!}
+gallery_data <- data.frame(
+  src =paste0("https://cdn.hackaday.io/images/3386621752496019850.jpg", 1:8, "/600/450"),
+  caption =paste("Site", 1:8, "-Sample Sponge Photo"),
+  stringsAsFactors = FALSE
+)
+
+gallery_cards <-pmap(gallery_data, functions(src, caption){
+  tags$div(
+    class = "gallery-card",
+    tags$img(src = src, alt = caption),
+    tags$div(class = "gallery-caption", caption)
+  )
+})
+
+gallery <- tags$div(class = "gallery-wrapper", gallery_cards)
+
+browsable(gallery)
+```
+
