@@ -8,25 +8,25 @@ knitr::opts_chunk$set(echo = FALSE)
 library(htmltools)
 library(purrr)
 library(knitr)
-``` 
-    
+```
+
 busy bee
 
-```{css}
+```{css html-import-or-backend}
 .gallery-wrapper {
 display: flex;
-overflow-x: auto;
+overflow-x: hidden;       /*disable scroll function*/
 scroll-snap-type: x mandatory;
 gap: 16px;
 padding: 16px;
 background: #f4f4f4;
--web kit-overflow-scrolling: touch;
+scroll-behavior: smooth;
 }
 
 .gallery-card {
 flex: 0 0 auto;
-width: 560px;
-height: 400px;
+width: 540px;
+height: 540 px;
 scroll-snap-align: start;
 position: relative;
 border-radius: 8px;
@@ -52,26 +52,80 @@ color: white;
 font-size: 0.9em;
 font-family: sans-serif;
 }
-```
+
+.gallery-controls {
+display: flex;
+justify-content: center;
+gap: 24px;
+padding: 12px 0;
+}
+
+.gallery-arrow{
+cursor: pointer;
+border: none;
+background: #333;
+color: white;
+font-size: 1.2em;
+width: 40px;
+height: 40px;
+border-radius: 50%
+}
+
+```                   
+ 
 yo
 
 ```{r build-gallery!}
 gallery_data <- data.frame(
-  src = rep("https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg", 8),
-    caption = paste("Researcher", 1:8, "-Louisiana Freshwater Sponge Lab "),
+  src = c("https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
+          "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",
+          "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg"),
+  
+  name = c(
+    "Researcher 1- Meaty Micheal",
+    "Researcher 2- John Pork",
+    "Researcher 3 - Tim Cheese"
+  ),
+  
+  caption = c(
+    "THE Bringer of Doom",
+    "Monarch of Pork",
+    "World's Greatest Con-Artist"
+  ),
   stringsAsFactors = FALSE
 )
+   
 
-gallery_cards <-pmap(gallery_data, function(src, caption){
+gallery_cards <-pmap(gallery_data, function(src, caption, name){
   tags$div(
     class = "gallery-card",
     tags$img(src = src, alt = caption),
-    tags$div(class = "gallery-caption", caption)
+    tags$div(
+      class = "gallery-caption",
+      tags$strong(name),
+      tags$br(),
+      caption
+    )
   )
 })
 
-gallery <- tags$div(class = "gallery-wrapper", gallery_cards)
+gallery <- tags$div(id = "gallery-wrapper", class = "gallery-wrapper", gallery_cards)
 
-browsable(gallery)
+controls <- tags$div(
+  class = "gallery-controls",
+  tags$button(class = "gallery-arrow", onclick = "scrollGallery(-1)", "←"),
+  tags$button(class = "gallery-arrow", onclick = "scrollGallery(1)", "→")
+)
+
+nav_script <- tags$script(HTML("
+  function scrollGallery(direction) {
+  var wrapper = document.getElementById('gallery-wrapper');
+  var card = wrapper.querySelector('.gallery-card');
+  var cardWidth = card.offsetWidth;
+  var gap = parseInt(getComputedStyle(wrapper).gap) || 0;
+  wrapper.scrollLeft += direction * (cardWidth + gap);
+  }
+"))
+
+browsable(tagList(gallery, controls, nav_script))
 ```
-
