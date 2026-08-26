@@ -8,8 +8,8 @@ knitr::opts_chunk$set(echo = FALSE)
 library(htmltools)
 library(purrr)
 library(knitr)
-``` 
-    
+```
+
 busy bee
 
 ```{css}
@@ -20,13 +20,13 @@ scroll-snap-type: x mandatory;
 gap: 16px;
 padding: 16px;
 background: #f4f4f4;
--web kit-overflow-scrolling: touch;
+-webkit-overflow-scrolling: touch;
 }
 
 .gallery-card {
 flex: 0 0 auto;
-width: 560px;
-height: 400px;
+width: 540px;
+height: 540 px;
 scroll-snap-align: start;
 position: relative;
 border-radius: 8px;
@@ -53,16 +53,31 @@ font-size: 0.9em;
 font-family: sans-serif;
 }
 ```
+
 yo
 
 ```{r build-gallery!}
 gallery_data <- data.frame(
-  src = rep("https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg", 8),
-    caption = paste("Researcher", 1:8, "-Louisiana Freshwater Sponge Lab "),
+  src = c("https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
+          "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",
+          "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg"),
+  
+  name = c(
+    "Researcher 1- Meaty Micheal",
+    "Researcher 2- John Pork",
+    "Researcher 3 - Tim Cheese"
+  ),
+  
+  caption = c(
+    "THE Bringer of Doom",
+    "Monarch of Pork",
+    "World's Greatest Con-Artist"
+  ),
   stringsAsFactors = FALSE
 )
+   
 
-gallery_cards <-pmap(gallery_data, function(src, caption){
+gallery_cards <-pmap(gallery_data, function(src, caption, name){
   tags$div(
     class = "gallery-card",
     tags$img(src = src, alt = caption),
@@ -74,4 +89,3 @@ gallery <- tags$div(class = "gallery-wrapper", gallery_cards)
 
 browsable(gallery)
 ```
-
