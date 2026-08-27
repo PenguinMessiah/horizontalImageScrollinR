@@ -1,5 +1,5 @@
 ---
-title: "HOLIDAYinn"
+title: "Image Gallery"
 output: html_document
 ---
 
@@ -20,11 +20,7 @@ scroll-snap-type: x mandatory;
 gap: 16px;
 padding: 16px;
 background: #f4f4f4;
-<<<<<<< HEAD
 scroll-behavior: smooth;
-=======
--webkit-overflow-scrolling: touch;
->>>>>>> 832f8526fdf2720445a3cfd35b0c422304377341
 }
 
 .gallery-card {
@@ -56,7 +52,6 @@ color: white;
 font-size: 0.9em;
 font-family: sans-serif;
 }
-<<<<<<< HEAD
 
 .gallery-controls {
 display: flex;
@@ -76,30 +71,56 @@ height: 40px;
 border-radius: 50%
 }
 
+.bio-section {
+display: flex;
+gap: 24px;
+align-items: flex-start;
+padding: 40px 16px;
+border-top: 1px solid #ddd;
+scroll-margin-top: 20px; /* keeps anchor from landing flush under a fixed header*/
+
+}
+
+.bio-photo {
+width: 260px;
+height: 260px;
+object-fit: cover;
+border-radius: 8px;
+flex: 0 0 auto;
+}
+
+.bio-text h3 {
+margin: 0 0 4px 0;
+}
+
+.bio-text .bio-caption {
+font-style: italic;
+color: #555;
+margin-bottom: 12px;
+}
 ```                   
  
-=======
-```
-
->>>>>>> 832f8526fdf2720445a3cfd35b0c422304377341
 yo
 
 ```{r build-gallery!}
 gallery_data <- data.frame(
   src = c("https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
-          "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",
-          "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg"),
+          "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",    
+          "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg",
+          "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg"),
   
   name = c(
     "Researcher 1- Meaty Micheal",
     "Researcher 2- John Pork",
-    "Researcher 3 - Tim Cheese"
+    "Researcher 3 - Tim Cheese",
+    "Researcher 4 - RStudio"
   ),
   
   caption = c(
     "THE Bringer of Doom",
     "Monarch of Pork",
-    "World's Greatest Con-Artist"
+    "World's Greatest Con-Artist",
+    "Vessel"
   ),
   stringsAsFactors = FALSE
 )
@@ -135,6 +156,7 @@ nav_script <- tags$script(HTML("
   wrapper.scrollLeft += direction * (cardWidth + gap);
   }
 "))
+
 
 browsable(tagList(gallery, controls, nav_script))
 ```
