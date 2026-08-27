@@ -20,7 +20,11 @@ scroll-snap-type: x mandatory;
 gap: 16px;
 padding: 16px;
 background: #f4f4f4;
+<<<<<<< HEAD
 scroll-behavior: smooth;
+=======
+-webkit-overflow-scrolling: touch;
+>>>>>>> 832f8526fdf2720445a3cfd35b0c422304377341
 }
 
 .gallery-card {
@@ -52,6 +56,7 @@ color: white;
 font-size: 0.9em;
 font-family: sans-serif;
 }
+<<<<<<< HEAD
 
 .gallery-controls {
 display: flex;
@@ -73,6 +78,10 @@ border-radius: 50%
 
 ```                   
  
+=======
+```
+
+>>>>>>> 832f8526fdf2720445a3cfd35b0c422304377341
 yo
 
 ```{r build-gallery!}
