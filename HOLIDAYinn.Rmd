@@ -1,5 +1,5 @@
 ---
-title: "Image Gallery"
+title: "Meet the Carousels!"
 output: html_document
 ---
 
@@ -10,9 +10,11 @@ library(purrr)
 library(knitr)
 ```
 
-busy bee
-
 ```{css html-import-or-backend}
+html {
+scroll-behavior: smooth;
+}
+
 .gallery-wrapper {
 display: flex;
 overflow-x: hidden;       /*disable scroll function*/
@@ -80,24 +82,6 @@ border-top: 1px solid #ddd;
 scroll-margin-top: 20px; /* keeps anchor from landing flush under a fixed header*/
 
 }
-
-.bio-photo {
-width: 260px;
-height: 260px;
-object-fit: cover;
-border-radius: 8px;
-flex: 0 0 auto;
-}
-
-.bio-text h3 {
-margin: 0 0 4px 0;
-}
-
-.bio-text .bio-caption {
-font-style: italic;
-color: #555;
-margin-bottom: 12px;
-}
 ```                   
  
 yo
@@ -107,28 +91,42 @@ gallery_data <- data.frame(
   src = c("https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
           "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",    
           "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg",
-          "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg"),
+          "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg",
+          "https://th.bing.com/th/id/OIP.bzxf4dI8W9sUOH71rIzNxwHaH9?w=108&h=108&c=1&bgcl=15aef6&r=0&o=7&dpr=2&pid=ImgRC&rm=3"),
   
   name = c(
     "Researcher 1- Meaty Micheal",
     "Researcher 2- John Pork",
     "Researcher 3 - Tim Cheese",
-    "Researcher 4 - RStudio"
+    "Researcher 4 - RStudio",
+    "Researcher 5 - Flowery"
   ),
   
   caption = c(
     "THE Bringer of Doom",
     "Monarch of Pork",
     "World's Greatest Con-Artist",
-    "Vessel"
+    "Vessel",
+    "Flower Man"
+  ),
+  
+  anchor_id =c(
+    "meaty-michael",
+    "john-pork",
+    "tim-cheese",
+    "vessel",
+    "flowery"
   ),
   stringsAsFactors = FALSE
 )
    
 
-gallery_cards <-pmap(gallery_data, function(src, caption, name){
+gallery_cards <-pmap(gallery_data, function(src, caption, name, anchor_id){
   tags$div(
     class = "gallery-card",
+    tags$a(
+      href = paste0("#", anchor_id),
+    ),
     tags$img(src = src, alt = caption),
     tags$div(
       class = "gallery-caption",
@@ -136,7 +134,7 @@ gallery_cards <-pmap(gallery_data, function(src, caption, name){
       tags$br(),
       caption
     )
-  )
+  )     
 })
 
 gallery <- tags$div(id = "gallery-wrapper", class = "gallery-wrapper", gallery_cards)
@@ -149,14 +147,31 @@ controls <- tags$div(
 
 nav_script <- tags$script(HTML("
   function scrollGallery(direction) {
-  var wrapper = document.getElementById('gallery-wrapper');
+  var wrapper =  document.getElementById('gallery-wrapper');
   var card = wrapper.querySelector('.gallery-card');
   var cardWidth = card.offsetWidth;
   var gap = parseInt(getComputedStyle(wrapper).gap) || 0;
   wrapper.scrollLeft += direction * (cardWidth + gap);
   }
-"))
+")) 
+
 
 
 browsable(tagList(gallery, controls, nav_script))
 ```
+
+# Meaty Michael
+The greatest researcher at this institution, we are glad to have him by our sides during these hard times of carousel shortages. (PLACEHOLDER TEXT)
+
+
+# John Pork
+King of hammin slammin and porka/yammin (PLACEHOLDER TEXT)
+
+# Tim Cheese
+squeak squeak squeak squeak squeak sqeak sqeak?
+
+# Vessel
+The vessel from jjs who is also RStudio for some reason???
+
+# Flowery
+flowers bloom in your heart
