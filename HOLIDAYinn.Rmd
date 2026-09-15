@@ -5,14 +5,29 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-library(htmltools)
+library(htmltools)     
 library(purrr)
 library(knitr)
 ```
 
 ```{css html-import-or-backend}
-html {
+html {         
 scroll-behavior: smooth;
+}
+/*WCAG 2.4.1 Bypass block: visually hidden until focused*/
+
+.skip-link{
+position: absolute;
+left: -9999px;
+top: 0;
+background: #000;
+color: #fff;
+padding: 8px 16px;
+z-index: 100;
+}
+.skip-link:focus {
+left: 8px; 
+top: 8px;
 }
 
 .gallery-wrapper {
@@ -25,10 +40,10 @@ background: #f4f4f4;
 scroll-behavior: smooth;
 }
 
-.gallery-card {
+.gallery-card { 
 flex: 0 0 auto;
 width: 540px;
-height: 540 px;
+height: 540px;
 scroll-snap-align: start;
 position: relative;
 border-radius: 8px;
@@ -42,6 +57,13 @@ height: 100%;
 object-fit: cover;
 display: block;
 }
+
+/* WCAG 2.4.7 +Focus Visible: default outline preserved, thickened for clarity  */
+.gallery-card-a:focus-visible {
+outline: 3px solid #005fcc;
+outline-offset: 2px;
+}
+   
 
 .gallery-caption {
 position: absolute;
@@ -73,17 +95,8 @@ height: 40px;
 border-radius: 50%
 }
 
-.bio-section {
-display: flex;
-gap: 24px;
-align-items: flex-start;
-padding: 40px 16px;
-border-top: 1px solid #ddd;
-scroll-margin-top: 20px; /* keeps anchor from landing flush under a fixed header*/
+```
 
-}
-```                   
- 
 yo
 
 ```{r build-gallery!}
@@ -92,14 +105,16 @@ gallery_data <- data.frame(
           "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",    
           "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg",
           "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg",
-          "https://th.bing.com/th/id/OIP.bzxf4dI8W9sUOH71rIzNxwHaH9?w=108&h=108&c=1&bgcl=15aef6&r=0&o=7&dpr=2&pid=ImgRC&rm=3"),
+          "https://th.bing.com/th/id/OIP.bzxf4dI8W9sUOH71rIzNxwHaH9?w=108&h=108&c=1&bgcl=15aef6&r=0&o=7&dpr=2&pid=ImgRC&rm=3",
+          "https://i.imgur.com/euS9qDk.jpeg"),
   
   name = c(
     "Researcher 1- Meaty Micheal",
     "Researcher 2- John Pork",
-    "Researcher 3 - Tim Cheese",
-    "Researcher 4 - RStudio",
-    "Researcher 5 - Flowery"
+    "Researcher 3 - Tim Cheese",          
+    "Researcher 4 - Vessel",
+    "Researcher 5 - Flowery",
+    "Researcher 6 - Rouxls Kaard"
   ),
   
   caption = c(
@@ -107,7 +122,8 @@ gallery_data <- data.frame(
     "Monarch of Pork",
     "World's Greatest Con-Artist",
     "Vessel",
-    "Flower Man"
+    "Flower Man",
+    "The Enemy Horde Leader"
   ),
   
   anchor_id =c(
@@ -115,29 +131,33 @@ gallery_data <- data.frame(
     "john-pork",
     "tim-cheese",
     "vessel",
-    "flowery"
+    "flowery",
+    "rouxls-kaard"
   ),
   stringsAsFactors = FALSE
-)
+) 
    
+# Add indexing 
 
 gallery_cards <-pmap(gallery_data, function(src, caption, name, anchor_id){
   tags$div(
     class = "gallery-card",
     tags$a(
       href = paste0("#", anchor_id),
+    tags$img(src = src, alt = caption)
     ),
-    tags$img(src = src, alt = caption),
     tags$div(
       class = "gallery-caption",
       tags$strong(name),
-      tags$br(),
+      tags$br(),  
       caption
     )
-  )     
+  )
 })
 
 gallery <- tags$div(id = "gallery-wrapper", class = "gallery-wrapper", gallery_cards)
+
+
 
 controls <- tags$div(
   class = "gallery-controls",
@@ -153,25 +173,42 @@ nav_script <- tags$script(HTML("
   var gap = parseInt(getComputedStyle(wrapper).gap) || 0;
   wrapper.scrollLeft += direction * (cardWidth + gap);
   }
-")) 
-
+"))                                                         
 
 
 browsable(tagList(gallery, controls, nav_script))
 ```
 
 # Meaty Michael
-The greatest researcher at this institution, we are glad to have him by our sides during these hard times of carousel shortages. (PLACEHOLDER TEXT)
 
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
 # John Pork
-King of hammin slammin and porka/yammin (PLACEHOLDER TEXT)
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
 # Tim Cheese
-squeak squeak squeak squeak squeak sqeak sqeak?
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
 # Vessel
-The vessel from jjs who is also RStudio for some reason???
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
 
 # Flowery
-flowers bloom in your heart
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.  
+
+# Rouxls Kaard
+
+WARNING WARNING ENEMY HORDE APPROACHING WARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHING
