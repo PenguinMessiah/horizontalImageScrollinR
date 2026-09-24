@@ -10,6 +10,33 @@ library(purrr)
 library(knitr)
 ```
 
+```{css theme-switching-variables}
+:root {
+--base-color: #ffffff;
+--base-variant: #e8e9ed;
+--text-color: #111528;
+--secondary-text: #232738;
+--primary-color: #3a435d;
+--accent-color: #0071ff;
+}
+
+html[data-theme="dark"] {
+--base-color: #070b1d;
+--base-variant: #101425;
+--text-color: #ffffff;
+--secondary-text: #a4a5b8;
+--primary-color: #3a435d;
+--accent-color: #0071ff;
+}
+
+body {
+background-color: var(--base-color);
+color: var(--text-color);
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+```
+
+
 ```{css html-import-or-backend}
 html {         
 scroll-behavior: smooth;
@@ -36,7 +63,8 @@ overflow-x: hidden;       /*disable scroll function*/
 scroll-snap-type: x mandatory;
 gap: 16px;
 padding: 16px;
-background: #f4f4f4;
+background:var(--base-variant);
+transition: background-color 0.3s ease;
 scroll-behavior: smooth;
 }
 
@@ -58,9 +86,9 @@ object-fit: cover;
 display: block;
 }
 
-/* WCAG 2.4.7 +Focus Visible: default outline preserved, thickened for clarity  */
-.gallery-card-a:focus-visible {
-outline: 3px solid #005fcc;
+/* WCAG 2.4.7 Focus Visible: default outline preserved, thickened for clarity */
+.gallery-card a:focus-visible {
+outline: 3px solid var(--accent-color);
 outline-offset: 2px;
 }
    
@@ -84,21 +112,54 @@ gap: 24px;
 padding: 12px 0;
 }
 
-.gallery-arrow{
+.gallery-arrow {
 cursor: pointer;
 border: none;
-background: #333;
-color: white;
+background-color: var(--primary-color);
+color: var(--base-color);
 font-size: 1.2em;
 width: 40px;
 height: 40px;
-border-radius: 50%
+border-radius: 50%;
 }
 
-```
+.gallery-arrow:focus-visible {
+outline: 3px solid var(--accent-color);
+outline-offset: 2px;
+}
 
-yo
+.dark-mode{
+--base-color: #070b1d;
+--base-variant: #101425
+--text-color: #ffffffff
+--secondary-text: #a4a5b8
+--primary-color: #3a435d
+--accent-color: #0071ff;
+}
 
+.theme-switch{
+height: 50px;
+width; 50px;
+padding: 0;
+border-radius: 50%;
+background-color: var(--base-variant);
+display: flex;
+justify-content: center;
+align-items: center;
+position: fixed;
+top: 20px;
+right: 20px;
+transition: background-color 0.3s ease;
+}
+
+.theme-switch:focus-visible {
+outline: 3px solid var(--accent-color);
+outline-offset: 2px;
+}
+
+
+```   
+       
 ```{r build-gallery!}
 gallery_data <- data.frame(
   src = c("https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
@@ -106,9 +167,33 @@ gallery_data <- data.frame(
           "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg",
           "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg",
           "https://th.bing.com/th/id/OIP.bzxf4dI8W9sUOH71rIzNxwHaH9?w=108&h=108&c=1&bgcl=15aef6&r=0&o=7&dpr=2&pid=ImgRC&rm=3",
+          "https://i.imgur.com/euS9qDk.jpeg","https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
+          "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",    
+          "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg",
+          "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg",
+          "https://th.bing.com/th/id/OIP.bzxf4dI8W9sUOH71rIzNxwHaH9?w=108&h=108&c=1&bgcl=15aef6&r=0&o=7&dpr=2&pid=ImgRC&rm=3",
+          "https://i.imgur.com/euS9qDk.jpeg",
+          "https://www.reithoffershows.com/wp-content/uploads/2017/08/Merry-Go-Round-1.jpg",
+          "https://th.bing.com/th/id/R.1a1492f10f097d83426a46908c117edd?rik=e8Cz6asab%2bePBw&pid=ImgRaw&r=0",    
+          "https://static.vecteezy.com/system/resources/previews/015/178/788/large_2x/carousel-merry-go-round-in-amusement-park-at-a-night-city-photo.jpg",
+          "https://i.pinimg.com/originals/0b/51/14/0b5114f76b7535476c161dd6c64470e6.jpg",
+          "https://th.bing.com/th/id/OIP.bzxf4dI8W9sUOH71rIzNxwHaH9?w=108&h=108&c=1&bgcl=15aef6&r=0&o=7&dpr=2&pid=ImgRC&rm=3",
           "https://i.imgur.com/euS9qDk.jpeg"),
+          
   
   name = c(
+    "Researcher 1- Meaty Micheal",
+    "Researcher 2- John Pork",
+    "Researcher 3 - Tim Cheese",          
+    "Researcher 4 - Vessel",
+    "Researcher 5 - Flowery",
+    "Researcher 6 - Rouxls Kaard",
+    "Researcher 1- Meaty Micheal",
+    "Researcher 2- John Pork",
+    "Researcher 3 - Tim Cheese",          
+    "Researcher 4 - Vessel",
+    "Researcher 5 - Flowery",
+    "Researcher 6 - Rouxls Kaard",
     "Researcher 1- Meaty Micheal",
     "Researcher 2- John Pork",
     "Researcher 3 - Tim Cheese",          
@@ -123,9 +208,21 @@ gallery_data <- data.frame(
     "World's Greatest Con-Artist",
     "Vessel",
     "Flower Man",
+    "The Enemy Horde Leader",
+    "THE Bringer of Doom",
+    "Monarch of Pork",
+    "World's Greatest Con-Artist",
+    "Vessel",
+    "Flower Man",
+    "The Enemy Horde Leader",
+    "THE Bringer of Doom",
+    "Monarch of Pork",
+    "World's Greatest Con-Artist",
+    "Vessel",
+    "Flower Man",
     "The Enemy Horde Leader"
   ),
-  
+  # Anchors to create click-to-go function in the gallery
   anchor_id =c(
     "meaty-michael",
     "john-pork",
@@ -158,25 +255,77 @@ gallery_cards <-pmap(gallery_data, function(src, caption, name, anchor_id){
 gallery <- tags$div(id = "gallery-wrapper", class = "gallery-wrapper", gallery_cards)
 
 
-
+# Adding the physical gallery arrows
 controls <- tags$div(
   class = "gallery-controls",
   tags$button(class = "gallery-arrow", onclick = "scrollGallery(-1)", "←"),
   tags$button(class = "gallery-arrow", onclick = "scrollGallery(1)", "→")
 )
 
+# Adding the physical  toggle button
+theme_toggle <- tags$button(
+id = "theme-toggle",
+class = "theme-switch",
+`aria-label` = "Toggle dark mode",
+onclick = "toggleTheme()",
+"🌙"
+)
+
+# Adding functionality to the gallery
 nav_script <- tags$script(HTML("
   function scrollGallery(direction) {
   var wrapper =  document.getElementById('gallery-wrapper');
   var card = wrapper.querySelector('.gallery-card');
   var cardWidth = card.offsetWidth;
   var gap = parseInt(getComputedStyle(wrapper).gap) || 0;
-  wrapper.scrollLeft += direction * (cardWidth + gap);
-  }
-"))                                                         
+  wrapper.scrollLeft += direction * (cardWidth + gap);                
+  }"))
+
+# Adding functionality to the dark mode toggle
+theme_script <- tags$script(HTML("
+(function() {
+var root = document.documentElement;
+var toggleBtn = document.getElementById('theme-toggle');
+
+function applyTheme(theme) {
+if (theme === 'dark') {
+root.setAttribute('data-theme', 'dark');
+toggleBtn.textContent = '\u2600\ufe0f';
+toggleBtn.setAttribute('aria-label', 'Switch to light mode');
+} else {
+root.removeAttribute('data-theme');
+toggleBtn.textContent = '\ud83c\udf19';
+toggleBtn.setAttribute('aria-label', 'Switch to dark mode');
+}
+}
+
+var saved = null;
+try {
+saved = localStorage.getItem('theme');
+} catch (e) {
+// localStorage unavailable (e.g. privacy mode); default to light
+}
+applyTheme(saved === 'dark' ? 'dark' : 'light');
+
+window.toggleTheme = function() {
+var current = root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+var next = current === 'dark' ? 'light' : 'dark';
+try {
+localStorage.setItem('theme', next);
+} catch (e) {
+// ignore if storage is unavailable
+}
+applyTheme(next);
+};
+})();
+"))
+
+# Add a way to extenuate the clicked profile.
+# Maybe like an animation, pop-out, or anything of the sorts.
 
 
-browsable(tagList(gallery, controls, nav_script))
+# Tying everything together and making it work together AND functional
+browsable(tagList(theme_toggle, gallery, controls, nav_script, theme_script))
 ```
 
 # Meaty Michael
@@ -205,10 +354,8 @@ Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapi
 
 # Flowery
 
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-
-Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.  
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus ns himenaeos.  Lorem ipsum dolor sit amet consectetur adipiscing per vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.    
 
 # Rouxls Kaard
 
-WARNING WARNING ENEMY HORDE APPROACHING WARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHINGWARNING WARNING ENEMY HORDE APPROACHING
+Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In iLorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
